@@ -50,14 +50,16 @@ def dc(pct, pc_hat, pct_1):
 def di(pit, pi_hat, pit_1):
     return (pit - pi_hat)/(pit_1 - pi_hat)
 
-
+tol = 1e-5
 pi_vals = [pi0]
 pc_vals = [pc0]
 pt_vals = [pt0]
 
 def run_em():
+    i = 0
+    converged = False
     
-    for i in range(10):
+    while not converged:
         ncc_val = exp_ncc(pc_vals[i], pi_vals[i], pt_vals[i])
         nci_val = exp_nci(pc_vals[i], pi_vals[i], pt_vals[i])
         nct_val = exp_nct(pc_vals[i], pi_vals[i], pt_vals[i])
@@ -71,7 +73,10 @@ def run_em():
         pi_vals.append(current_pi)
         pc_vals.append(current_pc)
         pt_vals.append(current_pt)
+        i += 1
         
+        if (r(pc_vals[i-1], pi_vals[i-1], pc_vals[i], pi_vals[i]) <= tol):
+            converged = True
 
 run_em()       
         
