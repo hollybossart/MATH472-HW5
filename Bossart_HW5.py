@@ -10,19 +10,19 @@ pt0 = 1/3
 n = nc + ni + nt
 
 
-def ncc(pc, pi, pt):
+def exp_ncc(pc, pi, pt):
     return (nc*(pc**2)/(pc**2 + 2*pc*pi + 2*pc*pt))
 
-def nci(pc, pi, pt):
+def exp_nci(pc, pi, pt):
     return ((2*nc*pc*pi)/(pc**2 + 2*pc*pi + 2*pc*pt))
 
-def nct(pc, pi, pt):
+def exp_nct(pc, pi, pt):
     return ((2*nc*pc*pt)/(pc**2 + 2*pc*pi + 2*pc*pt))
 
-def nii(pc, pi, pt):
+def exp_nii(pc, pi, pt):
     return ((ni*(pi**2))/(pi**2 + 2*pi*pt))
 
-def nit(pc, pi, pt):
+def exp_nit(pc, pi, pt):
     return (2*ni*pi*pt)/(pi**2 + 2*pi*pt)
 
 def update_pc(ncc, nci, nct):
@@ -51,11 +51,27 @@ def di(pit, pi_hat, pit_1):
     return (pit - pi_hat)/(pit_1 - pi_hat)
 
 
-pi_vals = []
-pc_vals = []
-pt_vals = []
+pi_vals = [pi0]
+pc_vals = [pc0]
+pt_vals = [pt0]
+
 def run_em():
     
     for i in range(10):
+        ncc_val = exp_ncc(pc_vals[i], pi_vals[i], pt_vals[i])
+        nci_val = exp_nci(pc_vals[i], pi_vals[i], pt_vals[i])
+        nct_val = exp_nct(pc_vals[i], pi_vals[i], pt_vals[i])
+        nii_val = exp_nii(pc_vals[i], pi_vals[i], pt_vals[i])
+        nit_val = exp_nit(pc_vals[i], pi_vals[i], pt_vals[i])
         
-    
+        current_pi = update_pi(nii_val, nit_val, nci_val)
+        current_pc = update_pc(ncc_val, nci_val, nct_val)
+        current_pt = update_pt(nt, nct_val, nit_val)
+        
+        pi_vals.append(current_pi)
+        pc_vals.append(current_pc)
+        pt_vals.append(current_pt)
+        
+
+run_em()       
+        
