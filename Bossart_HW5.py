@@ -64,7 +64,7 @@ def update_theta(theta0, theta1, theta2, max_iterations):
     print(theta)
         
         
-update_theta(-1, 1, -1, 100)
+update_theta(-1, 1, -1, 15)
 
 
 def plot(z1, z2):
