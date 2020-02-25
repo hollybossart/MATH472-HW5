@@ -173,6 +173,8 @@ def run_em():
         
         di = (pi_vals[j] - pi_vals[-1])/(pi_vals[j-1] - pi_vals[-1])
         di_vals.append(di)
+        
+    return
 
 run_em()       
         
